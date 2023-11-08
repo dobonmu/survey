@@ -1,0 +1,63 @@
+<form id="pollForm" action="{% url 'polls:test_vote' %}" method="post"  onsubmit="return validateForm()">
+    
+    <div>
+        *수집된 귀하의 이름과 전화번호는 식별용 이외의 용도로 사용되지 않습니다.
+    <p></p>
+    
+    </div>
+    
+    {% for question in open_question_list %}
+    <li>{{ question }}</li>
+        <ul>
+            <label for="choice_text">Your Answer:</label><br>
+            <textarea id="choice_text" name="choice_text_{{ question.id }}" rows="4" cols="50"></textarea><br>
+        </ul>
+    {% endfor %}
+    
+    <div style="text-align: center;">
+        <img src="{{ r_photo_1 }}" alt="Image" style="width: 200px; height: 200px;">
+        <img src="{{ r_photo_2 }}" alt="Image" style="width: 200px; height: 200px;">
+    </div>
+    
+    <input type="hidden" name="r_photo_1" value="{{ r_photo_1 }}">
+    <input type="hidden" name="r_photo_2" value="{{ r_photo_2 }}">
+
+    {% for question in question_list %}
+        <li>{{ question }}</li>
+        {% if question.choice_set.all %}
+            <ul>
+                {% csrf_token %}
+                {% for choice in question.choice_set.all %}
+                    <input type="radio" name="choice_{{ question.id }}" id="choice{{ forloop.counter }}" value="{{ choice.id }}" >
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endfor %}
+    <input type="submit" value="submit">
+</form>
+
+<script>
+    function validateForm() {
+        var radioGroups = document.querySelectorAll('input[type=radio]');
+        var checked = {};
+
+        radioGroups.forEach(function(radio) {
+            var name = radio.getAttribute('name');
+            if (radio.checked) {
+                checked[name] = true;
+            } else {
+                checked[name] = checked[name] || false;
+            }
+        });
+
+        for (var key in checked) {
+            if (!checked[key]) {
+                alert('모든 질문에 답변을 선택해야 합니다.');
+                return false;
+            }
+        }
+
+        return true;
+    }
+</script>

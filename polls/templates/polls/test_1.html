@@ -1,0 +1,28 @@
+{% for question in question_list %}
+<form action="{% url 'polls:test_vote' %}" method="post">
+
+<li>{{ question }}</li>
+    {% if question.choice_set.all %}
+        <ul>
+            <div style="text-align: center;">
+                
+                    <img src="{{ question.photo_1 }}" alt="Image" style="width: 200px; height: 200px;">
+                    <img src="{{ question.photo_2 }}" alt="Image" style="width: 200px; height: 200px;">
+                
+                </div>
+            {% csrf_token %}
+            {% for choice in question.choice_set.all %}
+            
+                <input type="radio" name="choice_{{ question.id }}" id="choice{{ forloop.counter }}" value="{{ choice.id }}" >
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        </ul>
+    {% else %}
+    <ul>
+        <label for="choice_text">Your Answer:</label><br>
+        <textarea id="choice_text" name="choice_text" rows="4" cols="50"></textarea><br>
+        </ul>
+    {% endif %}
+{% endfor %}
+<input type="submit" value="submit">
+</form>

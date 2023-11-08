@@ -1,0 +1,10 @@
+<!-- open_answer_form.html -->
+<h1>{{ question.question_text }}</h1>
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+
+    {% csrf_token %}
+    <label for="choice_text">Your Answer:</label><br>
+    <textarea id="choice_text" name="choice_text" rows="4" cols="50"></textarea><br>
+    <input type="submit" value="Submit">
+</form>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Responses</title>
+</head>
+<body>
+    <h1>User Responses</h1>
+    <ul>
+        {% for user_response in user_responses %}
+            <li>
+                <strong>User Information:</strong><br>
+                Name: {{ user_response.user.name }}<br>
+                Phone Number: {{ user_response.user.phone_num }}<br>
+                Photo 1: {{ user_response.user.photo_1 }}<br>
+                Photo 2: {{ user_response.user.photo_2 }}<br>
+                <strong>Response Details:</strong><br>
+                Question: {{ user_response.question }}<br>
+                Selected Answer: {{ user_response.selected_answer }}<br>
+                <hr>
+
+                
+                <hr>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

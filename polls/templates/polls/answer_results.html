@@ -1,0 +1,13 @@
+<h1>{{ question.question_text }}</h1>
+
+{% if question.open_answer_set.all %}
+    <ul>
+    {% for answer in question.open_answer_set.all %}
+        <li>{{ answer.user_answer }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No text answers available for this question.</p>
+{% endif %}
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
